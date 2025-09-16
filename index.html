@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dinda and Nauhan</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffe6f2;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header {
+      background-color: #ff99cc;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+    }
+    main {
+      padding: 20px;
+    }
+    .upload-box {
+      background: white;
+      border: 2px dashed #ff66b2;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 400px;
+    }
+    input[type="file"] {
+      margin: 10px 0;
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .gallery img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      margin: 5px;
+      border-radius: 10px;
+      border: 2px solid #ff99cc;
+    }
+  </style>
+</head>
+<body>
+  <header>💕 Web Dinda and Nauhan 💕</header>
+  <main>
+    <div class="upload-box">
+      <p>Pilih foto untuk ditambahkan:</p>
+      <input type="file" id="fileInput" accept="image/*">
+      <button onclick="addPhoto()">Tambahkan</button>
+    </div>
+    <h2>Galeri Foto</h2>
+    <div class="gallery" id="gallery"></div>
+  </main>
+
+  <script>
+    // Simpan foto ke localStorage agar tidak hilang saat refresh
+    function loadPhotos() {
+      const gallery = document.getElementById("gallery");
+      const photos = JSON.parse(localStorage.getItem("photos")) || [];
+      gallery.innerHTML = "";
+      photos.forEach(src => {
+        const img = document.createElement("img");
+        img.src = src;
+        gallery.appendChild(img);
+      });
+    }
+
+    function addPhoto() {
+      const input = document.getElementById("fileInput");
+      const file = input.files[0];
+      if (!file) return alert("Pilih foto dulu!");
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const photos = JSON.parse(localStorage.getItem("photos")) || [];
+        photos.push(e.target.result);
+        localStorage.setItem("photos", JSON.stringify(photos));
+        loadPhotos();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Load foto saat halaman dibuka
+    window.onload = loadPhotos;
+  </script>
+</body>
+</html>
