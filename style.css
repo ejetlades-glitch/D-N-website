@@ -1,0 +1,12 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #ffe6f0;
+  color: #d63384;
+}
+
+#gallery img {
+  width: 100px;
+  margin: 5px;
+  border-radius: 10px;
+}
